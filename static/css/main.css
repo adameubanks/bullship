@@ -1,0 +1,231 @@
+body, html {
+	height: 100%;
+	background-color: #f4f4f9;
+	color: #333;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hero {
+	text-align: center;
+	padding: 20px;
+	margin-bottom: 20px;
+	background: linear-gradient(135deg, #4d0909 0%, #aa1553 100%);
+	color: white;
+	position: relative;
+}
+.hero h2 {
+	font-size: 2.5em;
+	margin-bottom: 10px;
+	animation: fadeInDown 1s;
+}
+.hero p {
+	font-size: 1.2em;
+	margin-bottom: 0;
+	animation: fadeInUp 1s;
+}
+.hero::after {
+	content: '';
+	background-image: url('https://techcrunch.com/wp-content/uploads/2015/04/codecode.jpg?w=1024');
+	background-size: cover;
+	background-position: center;
+	opacity: 0.1;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.jumbotron {
+	position: relative;
+	background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../img/wildwestbackground.jpg') center center;
+	background-size: cover;
+	color: white;
+	padding: 80px 20px;
+}
+.jumbotron h1 {
+	font-size: 3.5rem;
+	font-weight: 700;
+	animation: fadeInDown 1s;
+}
+.jumbotron p {
+	font-size: 1.5rem;
+	margin-top: 20px;
+	animation: fadeInUp 1s;
+}
+.jumbotron a {
+	display: inline-block;
+	margin-top: 30px;
+	padding: 15px 30px;
+	font-size: 1.2rem;
+	color: #fff;
+	border-radius: 5px;
+	text-decoration: none;
+	transition: background-color 0.3s, transform 0.3s;
+}
+.jumbotron a:hover {
+	transform: scale(1.05);
+}
+
+@keyframes fadeInDown {
+	from {
+			opacity: 0;
+			transform: translateY(-20px);
+	}
+	to {
+			opacity: 1;
+			transform: translateY(0);
+	}
+}
+@keyframes fadeInUp {
+	from {
+			opacity: 0;
+			transform: translateY(20px);
+	}
+	to {
+			opacity: 1;
+			transform: translateY(0);
+	}
+}
+
+.container-build {
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	padding: 30px;
+	margin-top: 50px;
+}
+.container {
+	max-width: 1200px;
+}
+
+.btn-primary {
+	background-color: #9c0000;
+	border-color: #9c0000;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+	background-color: #a70000 !important;
+	border-color: #a70000 !important;
+}
+
+.speech-bubble {
+	position: relative;
+	background: #bbbbbb;
+	border-radius: .4em;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: -30px;
+	width: 0;
+	height: 0;
+	border: 30px solid transparent;
+	border-right-color: #bbbbbb;
+	border-left: 0;
+	margin-top: -30px;
+}
+
+.step {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.step-header {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+.step i {
+	margin-right: 10px;
+	transition: transform 0.2s ease-in-out;
+}
+.step:hover i {
+	transform: scale(1.2);
+}
+
+.card {
+	background: #fff;
+	color: #333;
+	border: none;
+	border-radius: 10px;
+	transition: transform 0.3s ease-in-out;
+}
+.card:hover {
+	transform: scale(1.05);
+}
+.card-title {
+	margin: 0;
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+.card-text {
+	font-size: 1rem;
+}
+
+.theme-options {
+	display: flex;
+	gap: 10px;
+	overflow-x: auto;
+	white-space: nowrap;
+	scroll-behavior: smooth;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scrollbar-color: #888 #f0f0f0;
+	-ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+	scrollbar-width: none; /* Hide scrollbar for Firefox */
+	height: 150px;
+}
+.theme-options::-webkit-scrollbar {
+	display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+.theme-option input[type="radio"] {
+	display: none;
+}
+.theme-option label {
+	cursor: pointer;
+	transition: all 0.1s ease;
+	position: relative;
+	display: inline-block;
+}
+.theme-option input[type="radio"]:checked + label {
+	border: 7px solid #a70000;
+	border-radius: 5px;
+}
+
+.alt-text {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	text-align: center;
+	padding: 5px 0;
+}
+
+.scroll-left, .scroll-right {
+	cursor: pointer;
+	padding: 10px;
+	margin: 5px;
+	font-size: 1.5em;
+	background-color: none;
+	position: absolute;
+	border: none;
+	top: 53%;
+	transform: translateY(-50%);
+	z-index: 10;
+}
+.scroll-left:focus, .scroll-right:focus {
+	outline: none;
+}
+.scroll-left {
+	left: 0;
+}
+.scroll-right {
+	right: 0;
+}

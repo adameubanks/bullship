@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+{% block content %}
+<!-- Build Section -->
+<div class="hero">
+	<h2><i class="fas fa-rocket"></i> Launch Your Custom SaaS Today!</h2>
+	<p>Personalize every aspect of your SaaS effortlessly - no coding required.</p>    
+</div>
+<div class="container-build container mt-0">
+	<div class="row">
+		<div class="col-lg-10 offset-lg-1">
+			<form action="{{ url_for('main.preview') }}" method="POST">
+				<div class="form-group mt-3">
+					<label for="app_name">Site Name:</label>
+					<input type="text" class="form-control" id="app_name" name="app_name" required>
+				</div>
+				<div class="form-group mt-3">
+					<label for="app_name">Site Description:</label>
+					<textarea class="form-control" id="app_description" name="app_description"
+						placeholder="Describe your site here and the AI will fill in the text of your website"></textarea>
+				</div>
+				<div class="form-group mt-3">
+				  <label for="app_theme">Choose a theme:</label>
+				  <button class="scroll-left" type="button"><i class="fas fa-chevron-left"></i></button>
+				  <div class="theme-options">
+					{% for theme in themes %}
+						<div class="theme-option">
+							<input type="radio" id="{{ theme }}" name="app_theme" value="{{ theme }}" required>
+							<label for="{{ theme }}" class="theme-label">
+								<img src="{{ url_for('static', filename='img/template_previews/' + theme + '.png') }}" width="200px" height="115px">
+								<span class="alt-text">{{ theme }}</span>
+							</label>
+						</div>
+					{% endfor %}
+				  </div>
+				  <button class="scroll-right" type="button"><i class="fas fa-chevron-right"></i></button>
+				</div>
+				<div class="form-group mt-3">
+					<label for="app_mode">Choose a navbar color:</label>
+					<div class="mode-options">
+						<input type="radio" id="primary" name="app_mode" value="primary" required checked>
+						<label for="primary" class="mode-label">Primary (recommended)</label>
+						<input type="radio" id="light" name="app_mode" value="light" required>
+						<label for="light" class="mode-label">Light</label>
+						<input type="radio" id="dark" name="app_mode" value="dark" required>
+						<label for="dark" class="mode-label">Dark</label>
+					</div>
+				</div>
+				<div class="container text-center mt-5">
+					<button type="submit" class="btn btn-lg btn-primary">Preview my Site</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	const themeOptionsContainer = document.querySelector('.theme-options');
+	
+	// Find the scroll buttons
+	const scrollRightBtn = document.querySelector('.scroll-right');
+	const scrollLeftBtn = document.querySelector('.scroll-left');
+	
+	// Scroll right functionality
+	scrollRightBtn.addEventListener('click', function() {
+		if (themeOptionsContainer.scrollWidth - Math.ceil(themeOptionsContainer.scrollLeft) <= themeOptionsContainer.offsetWidth) {
+			// If at the end, scroll to the beginning
+			themeOptionsContainer.scrollTo({ left: 0, behavior: 'smooth' });
+		} else {
+			// Normal scroll right
+			themeOptionsContainer.scrollBy({ left: 700, behavior: 'smooth' });
+		}
+	});
+	
+	// Scroll left functionality
+	scrollLeftBtn.addEventListener('click', function() {
+		if (themeOptionsContainer.scrollLeft === 0) {
+			// If at the beginning, scroll to the end
+			themeOptionsContainer.scrollTo({ left: themeOptionsContainer.scrollWidth, behavior: 'smooth' });
+		} else {
+			// Normal scroll left
+			themeOptionsContainer.scrollBy({ left: -700, behavior: 'smooth' });
+		}
+	});
+});
+</script>
+{% endblock %}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ app_name }} | Bullship PREVIEW</title>
+	<link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+	<!-- Bootstrap CSS -->
+	<link href="{{ url_for('static', filename='css/' + app_theme) }}" rel="stylesheet">
+</head>
+
+<body class="d-flex flex-column" style="height: 100vh;">
+	<!-- Header -->
+	<nav class="navbar navbar-expand-lg bg-{{ app_mode }}">
+		<div class="container d-flex justify-content-between">
+			<a class="navbar-brand d-flex align-items-center" href="{{ url_for('main.index') }}">
+				<img src="{{ url_for('static', filename='img/sitting_bully.svg') }}" width="75" height="75" class="d-inline-block align-top">
+				<span class="ml-2 h1 {% if app_mode == 'primary' or app_mode == 'dark' %}text-white{%endif %}">{{ app_name }}</span>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<form action="/create-checkout-session" method="POST">
+				<button type="submit" id="checkout-button" class="btn btn-danger">Get This Template!</button>
+			</form>
+		</div>
+	</nav>
+	<div class="container mt-5 text-center">
+		<h1 class="display-4">Like what you see?</h1>
+		<h2 class="mt-4">Get access to this powerful template today. With just one click, you'll be one step closer to launching your SaaS platform!</h2>
+	</div>
+	<div class="container mt-5">
+		<h1 class="text-center">Why Choose Our Boilerplate Flask Template?</h1>
+		<p class="text-center">Launching a SaaS platform doesn't have to be overwhelming. Our boilerplate Flask template is crafted to make your journey smooth and efficient. Here’s why it stands out:</p>
+		<div class="d-flex flex-wrap justify-content-around mt-4">
+			<div class="card mb-4 shadow-sm" style="width: 20rem;">
+				<div class="card-body">
+					<h5 class="card-title"><i class="fas fa-rocket"></i> Speed</h5>
+					<p class="card-text">Accelerate your development process. Our template lets you move from concept to launch swiftly, saving you invaluable time.</p>
+				</div>
+			</div>
+			<div class="card mb-4 shadow-sm" style="width: 20rem;">
+				<div class="card-body">
+					<h5 class="card-title"><i class="fas fa-lock"></i> Best Practices</h5>
+					<p class="card-text">Built using industry best practices, our template guarantees your platform is secure, scalable, and easy to maintain.</p>
+				</div>
+			</div>
+			<div class="card mb-4 shadow-sm" style="width: 20rem;">
+				<div class="card-body">
+					<h5 class="card-title"><i class="fas fa-paint-brush"></i> Customization</h5>
+					<p class="card-text">Ready to use out of the box, yet fully customizable. Tailor the template to match your specific needs and branding.</p>
+				</div>
+			</div>
+		</div>
+		<p class="text-center mt-4">Don't let technical challenges hinder your entrepreneurial spirit. Choose our boilerplate Flask template and focus on what truly matters – growing your business.</p>
+		<div class="text-center mt-4">
+			<form action="/create-checkout-session" method="POST">
+				<button type="submit" id="checkout-button" class="btn btn-primary">Get This Template!</button>
+			</form>
+		</div>
+	</div>
+	<br>
+	<!-- Footer -->
+	<footer class="mt-auto footer mt-auto py-3 bg-dark">
+		<div class="container text-center">
+			<p style="color:white;">© 2024 Bullship. All rights reserved.</p>
+				<ul class="list-inline">
+					<li class="list-inline-item"><a href="#" class="text-white">Privacy Policy</a></li>
+					<li class="list-inline-item"><a href="#" class="text-white">Terms of Service</a></li>
+				</ul>
+		</div>
+	</footer>
+
+	<!-- Bootstrap JS and dependencies -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
