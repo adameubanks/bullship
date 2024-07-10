@@ -9,9 +9,13 @@
 			<div class="card mt-5">
 				<div class="card-body">
 					<h5 class="card-title">Your Template Details</h5>
-					<p class="card-text">Site Name: {{ app_name }}</p>
-					<p class="card-text">Theme: {{ app_theme }}</p>
-					<p class="card-text">Navbar Color: {{ app_mode }}</p>
+					<p class="card-text">Site Name: {{ app_name }}<br>
+					Theme: {{ app_theme }}<br>
+					Descripton: {{ app_description }}<br>
+					Navbar Color: {{ app_mode }}</p>
+					<form action="{{ url_for('main.download') }}" method="post">
+						<button type="submit" class="btn btn-primary">Generate & Download</button>
+					</form>
 				</div>
 			</div>
 		</div>
