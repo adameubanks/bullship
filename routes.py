@@ -19,14 +19,22 @@ def index():
 
 @main.route('/build')
 def build():
-    template_themes = ['darkly', 'flatly', 'journal', 'litera', 'lux', 'minty', 'quartz', 'solar', 'vapor']
-    return render_template('build.html', themes=template_themes)
+    template_themes = {'darkly':'https://bootswatch.com/5/darkly/bootstrap.css',
+                       'flatly':'https://bootswatch.com/5/flatly/bootstrap.css',
+                       'journal':'https://bootswatch.com/5/journal/bootstrap.css',
+                       'litera':'https://bootswatch.com/5/litera/bootstrap.css',
+                       'lux':'https://bootswatch.com/5/lux/bootstrap.css',
+                       'minty':'https://bootswatch.com/5/minty/bootstrap.css',
+                       'quartz':'https://bootswatch.com/5/quartz/bootstrap.css',
+                       'solar':'https://bootswatch.com/5/solar/bootstrap.css',
+                       'vapor':'https://bootswatch.com/5/vapor/bootstrap.css'}
+    return render_template('build.html', themes=template_themes.keys())
 
 @main.route('/preview', methods=['POST'])
 def preview():
     app_name = request.form['app_name'] 
     app_description = request.form['app_description']
-    app_theme = request.form['app_theme'] + ".css"
+    app_theme = request.form['app_theme']
     app_mode = request.form['app_mode']
 
     session['app_name'] = app_name
@@ -77,4 +85,4 @@ def download():
 
     temp_dir = create_boilerplate(app_name, app_description, app_theme, app_mode)
     zip_path = shutil.make_archive(temp_dir, 'zip', temp_dir)
-    return send_file(zip_path, as_attachment=True, download_name=app_name+".zip")
+    return send_file(zip_path, as_attachment=True, download_name=app_name.strip().replace(" ", "_")+".zip")
