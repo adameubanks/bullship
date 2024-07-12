@@ -3,15 +3,15 @@
 <div class="container mt-5">
 	<div class="row">
 		<div class="col-lg-10">
-			<h1>Success!</h1>
-			<p>Your Bullship template is now yours. Time to make waves online.</p>
+			<h1>Yeehaw! Your Template is Ready to Ride</h1>
+			<p>Congratulations! Your Bullship template is now in your possession. It's time to blaze trails online and turn your ideas into reality.</p>			
 
 			<div class="card mt-5">
 				<div class="card-body">
 					<h5 class="card-title">Your Template Details</h5>
 					<p class="card-text">Site Name: {{ app_name }}<br>
 					Theme: {{ app_theme }}<br>
-					Descripton: {{ app_description }}<br>
+					Description: {{ app_description }}<br>
 					Navbar Color: {{ app_mode }}</p>
 					<form action="{{ url_for('main.download') }}" method="post">
 						<button type="submit" class="btn btn-primary">Generate & Download</button>

@@ -2,29 +2,30 @@
 {% block content %}
 <!-- Build Section -->
 <div class="hero">
-	<h2><i class="fas fa-rocket"></i> Launch Your Custom SaaS Today!</h2>
-	<p>Personalize every aspect of your SaaS effortlessly - no coding required.</p>    
+	<h2><i class="fas fa-rocket"></i> Get Your AI SaaS Template Today!</h2>
+	<p>Personalize your AI SaaS - no coding required.</p>    
 </div>
 <div class="container-build container mt-0">
 	<div class="row">
 		<div class="col-lg-10 offset-lg-1">
-			<form action="{{ url_for('main.preview') }}" method="POST">
+			<div id="alertPlaceholder" class="container mt-3"></div>
+			<form action="{{ url_for('main.preview') }}" id="buildForm" method="POST">
 				<div class="form-group mt-3">
 					<label for="app_name">Site Name:</label>
 					<input type="text" class="form-control" id="app_name" name="app_name" required>
 				</div>
 				<div class="form-group mt-3">
-					<label for="app_name">Site Description:</label>
+					<label for="app_description">Site Description:</label>
 					<textarea class="form-control" id="app_description" name="app_description"
 						placeholder="Describe your site here and the AI will fill in the text of your website"></textarea>
 				</div>
 				<div class="form-group mt-3">
-				  <label for="app_theme">Choose a theme:</label>
+				  <p>Choose a theme:</p>
 				  <button class="scroll-left" type="button"><i class="fas fa-chevron-left"></i></button>
 				  <div class="theme-options">
 					{% for theme in themes %}
 						<div class="theme-option">
-							<input type="radio" id="{{ theme }}" name="app_theme" value="{{ theme }}" required>
+							<input type="radio" id="{{ theme }}" name="app_theme" value="{{ theme }}">
 							<label for="{{ theme }}" class="theme-label">
 								<img src="{{ url_for('static', filename='img/template_previews/' + theme + '.png') }}" width="200px" height="115px">
 								<span class="alt-text">{{ theme }}</span>
@@ -35,7 +36,7 @@
 				  <button class="scroll-right" type="button"><i class="fas fa-chevron-right"></i></button>
 				</div>
 				<div class="form-group mt-3">
-					<label for="app_mode">Choose a navbar color:</label>
+					<p>Choose a navbar color:</p>
 					<div class="mode-options">
 						<input type="radio" id="primary" name="app_mode" value="primary" required checked>
 						<label for="primary" class="mode-label">Primary (recommended)</label>
@@ -53,6 +54,27 @@
 	</div>
 </div>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('form'); // Adjust if your form has a specific class or ID
+  form.addEventListener('submit', function(e) {
+    const themeSelected = document.querySelector('input[name="app_theme"]:checked');
+    if (!themeSelected) {
+      e.preventDefault(); // Prevent form submission
+      displayBootstrapAlert('Please select a theme before submitting.', 'danger');
+    }
+  });
+});
+
+function displayBootstrapAlert(message, type) {
+  const alertPlaceholder = document.getElementById('alertPlaceholder');
+  alertPlaceholder.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+			${message}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+    </div>`;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 	const themeOptionsContainer = document.querySelector('.theme-options');
 	
