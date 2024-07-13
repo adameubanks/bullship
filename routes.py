@@ -33,16 +33,18 @@ def build():
 @main.route('/preview', methods=['POST'])
 def preview():
     app_name = request.form['app_name'] 
+    app_tagline = request.form['app_tagline']
     app_description = request.form['app_description']
     app_theme = request.form['app_theme']
     app_mode = request.form['app_mode']
 
     session['app_name'] = app_name
+    session['app_tagline'] = app_tagline
     session['app_description'] = app_description
     session['app_theme'] = app_theme
     session['app_mode'] = app_mode
 
-    return render_template('preview.html', app_name=app_name, app_description=app_description, app_theme=app_theme, app_mode=app_mode)
+    return render_template('preview.html', app_name=app_name, app_tagline=app_tagline, app_description=app_description, app_theme=app_theme, app_mode=app_mode)
 
 @main.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
@@ -66,11 +68,12 @@ def create_checkout_session():
 @main.route('/success')
 def success():
     app_name = session['app_name']
+    app_tagline = session['app_tagline']
     app_description = session['app_description']
     app_theme = session['app_theme']
     app_mode = session['app_mode']
 
-    return render_template('success.html', app_name=app_name, app_description=app_description, app_theme=app_theme, app_mode=app_mode)
+    return render_template('success.html', app_name=app_name, app_tagline=app_tagline, app_description=app_description, app_theme=app_theme, app_mode=app_mode)
 
 @main.route('/cancel')
 def cancel():
@@ -79,10 +82,11 @@ def cancel():
 @main.route('/download', methods=['POST'])
 def download():
     app_name = session['app_name']
+    app_tagline = session['app_tagline']
     app_description = session['app_description']
     app_theme = session['app_theme']
     app_mode = session['app_mode']
 
-    temp_dir = create_boilerplate(app_name, app_description, app_theme, app_mode)
+    temp_dir = create_boilerplate(app_name, app_tagline, app_description, app_theme, app_mode)
     zip_path = shutil.make_archive(temp_dir, 'zip', temp_dir)
     return send_file(zip_path, as_attachment=True, download_name=app_name.strip().replace(" ", "_")+".zip")

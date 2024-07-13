@@ -3,7 +3,7 @@ import tempfile
 from string import Template
 #import requests
 
-def create_boilerplate(name="App Name", description="App Description", theme="App Theme", mode="Light"):
+def create_boilerplate(name="App Name", tagline="App Tagline", description="App Description", theme="App Theme", mode="Light"):
 	temp_dir = tempfile.mkdtemp()
 	app_dir = os.path.join(temp_dir, name.strip().replace(" ", "_"))
 	os.makedirs(app_dir, exist_ok=True)
@@ -24,13 +24,18 @@ def create_boilerplate(name="App Name", description="App Description", theme="Ap
 
 	with open(index_file_path, 'r') as f:
 		index_content = Template(f.read())
-	modified_content = index_content.substitute(name=name, description=description)
+	modified_content = index_content.substitute(name=name, tagline=tagline, description=description)
 	with open(os.path.join(app_dir+'/templates/', 'index.html'), 'w') as target_file:
 		target_file.write(modified_content)
 
 	with open(layout_file_path, 'r') as f:
 		layout_content = Template(f.read())
-	modified_content = layout_content.substitute(name=name, theme=theme, mode=mode)
+	# Get text color for navbar
+	if mode == "dark" or mode == "primary":
+		text_color = "text-white"
+	else:
+		text_color = "text-dark"
+	modified_content = layout_content.substitute(name=name, tagline=tagline, theme=theme, mode=mode, text_color=text_color)
 	with open(os.path.join(app_dir+'/templates/', 'layout.html'), 'w') as target_file:
 		target_file.write(modified_content)
 
