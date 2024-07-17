@@ -16,6 +16,12 @@
 	margin-top: 20px;
 	animation: fadeInUp 1s;
 }
+.jumbotron .btn {
+  font-size: 1.2em;
+  padding: 15px 30px;
+  border-radius: 30px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 .jumbotron a {
 	display: inline-block;
 	margin-top: 30px;

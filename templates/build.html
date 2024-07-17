@@ -12,15 +12,15 @@
 			<form action="{{ url_for('main.preview') }}" id="buildForm" method="POST">
 				<div class="form-group mt-3">
 					<label for="app_name">Site Name:</label>
-					<input type="text" class="form-control" id="app_name" name="app_name" required>
+					<input type="text" class="form-control" id="app_name" name="app_name" placeholder="Bullship" required>
 				</div>
 				<div class="form-group mt-3">
 					<label for="app_tagline">Site Tagline:</label>
-					<input type="text" class="form-control" id="app_tagline" name="app_tagline" required>
+					<input type="text" class="form-control" id="app_tagline" name="app_tagline" placeholder="The Fastest SaaS Solution in the West!" required>
 				<div class="form-group mt-3">
 					<label for="app_description">Site Description:</label>
 					<textarea class="form-control" id="app_description" name="app_description"
-						placeholder="" required></textarea>
+						placeholder="Bullship makes it easy to create and launch your AI SaaS platform with a versatile, lightweight template. Harnessing the power of Bootstrap, Flask, and Stripe, Bullship ensures a smooth, scalable, and secure journey from idea to implementation." required></textarea>
 				</div>
 				<div class="form-group mt-3">
 				  <p>Choose a theme:</p>
@@ -108,4 +108,5 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 });
 </script>
+</div>
 {% endblock %}
