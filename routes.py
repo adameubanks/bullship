@@ -1,7 +1,6 @@
-from flask import Blueprint, render_template, request, redirect, url_for, send_file
+from flask import Blueprint, render_template, redirect, url_for, send_file, request, session
 from app.boilerplateGenerator import create_boilerplate
 from config import Config
-from flask import session
 import stripe
 import shutil
 
