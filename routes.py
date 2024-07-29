@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, send_file, request, session
-# from app.boilerplateGenerator import create_boilerplate
+from app.boilerplateGenerator import create_boilerplate
 from config import Config
 import yaml
 import stripe
-# import shutil
+import shutil
 import tempfile
 
 main = Blueprint('main', __name__)
@@ -89,25 +89,26 @@ def download():
     app_mode = session['app_mode']
 
     # Zip boilerplate code
-    # temp_dir = create_boilerplate(app_name, app_tagline, app_description, app_theme, app_mode)
-    # zip_path = shutil.make_archive(temp_dir, 'zip', temp_dir)
-    # return send_file(zip_path, as_attachment=True, download_name=app_name.strip().replace(" ", "_")+".zip")
+    temp_dir = create_boilerplate(app_name, app_tagline, app_description, app_theme, app_mode)
+    zip_path = shutil.make_archive(temp_dir, 'zip', temp_dir)
+    return send_file(zip_path, as_attachment=True, download_name=app_name.strip().replace(" ", "_")+".zip")
 
-    # Create config file
-    config_data = {
-        "name": app_name,
-        "tagline": app_tagline,
-        "description": app_description,
-        "theme": app_theme,
-        "mode": app_mode,
-        "application_secret_key": 'your_application_secret_key',
-        "stripe_secret_key": 'your_stripe_secret_key',
-        "stripe_publishable_key": 'your_stripe_publishable_key',
-    }
+    # # Create config file
+    # config_data = {
+    #     "name": app_name,
+    #     "tagline": app_tagline,
+    #     "description": app_description,
+    #     "theme": app_theme,
+    #     "mode": app_mode,
+    #     "application_secret_key": 'your_application_secret_key',
+    #     "stripe_secret_key": 'your_stripe_secret_key',
+    #     "stripe_publishable_key": 'your_stripe_publishable_key',
+    #     "stripe_price_id": 'your_stripe_price_id',
+    # }
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.yml', mode='w') as temp_file:
-        yaml.dump(config_data, temp_file, sort_keys=False)
-        temp_file_path = temp_file.name
+    # with tempfile.NamedTemporaryFile(delete=False, suffix='.yml', mode='w') as temp_file:
+    #     yaml.dump(config_data, temp_file, sort_keys=False)
+    #     temp_file_path = temp_file.name
 
-    # Send the temporary file as an attachment
-    return send_file(temp_file_path, as_attachment=True, download_name='config.yml')
+    # # Send the temporary file as an attachment
+    # return send_file(temp_file_path, as_attachment=True, download_name='config.yml')

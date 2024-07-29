@@ -10,11 +10,11 @@ def create_boilerplate(name="App Name", tagline="App Tagline", description="App 
 	# Templates
 	os.makedirs(app_dir+'/templates/', exist_ok=True)
 
-	layout_file_path="/home/adam/Projects/Fullstack/bullship/boilerplate/templates/layout.html"
-	index_file_path="/home/adam/Projects/Fullstack/bullship/boilerplate/templates/index.html"
-	form_file_path="/home/adam/Projects/Fullstack/bullship/boilerplate/templates/form.html"
-	success_file_path="/home/adam/Projects/Fullstack/bullship/boilerplate/templates/success.html"
-	cancel_file_path="/home/adam/Projects/Fullstack/bullship/boilerplate/templates/cancel.html"
+	layout_file_path="./boilerplate/templates/layout.html"
+	index_file_path="./boilerplate/templates/index.html"
+	form_file_path="./boilerplate/templates/form.html"
+	success_file_path="./boilerplate/templates/success.html"
+	cancel_file_path="./boilerplate/templates/cancel.html"
 
 	with open(layout_file_path, 'r') as f:
 		layout_content = Template(f.read())
@@ -53,9 +53,9 @@ def create_boilerplate(name="App Name", tagline="App Tagline", description="App 
 	os.makedirs(app_dir+'/static/css', exist_ok=True)
 	os.makedirs(app_dir+'/static/img', exist_ok=True)
 
-	css_file_path="/home/adam/Projects/Fullstack/bullship/boilerplate/static/css/main.css"
-	favicon_file_path="/home/adam/Projects/Fullstack/bullship/boilerplate/static/img/favicon.ico"
-	logo_file_path="/home/adam/Projects/Fullstack/bullship/boilerplate/static/img/logo.svg"
+	css_file_path="./boilerplate/static/css/main.css"
+	favicon_file_path="./boilerplate/static/img/favicon.ico"
+	logo_file_path="./boilerplate/static/img/logo.svg"
 
 	with open(css_file_path, 'r') as f:
 		css_content = f.read()
@@ -73,8 +73,8 @@ def create_boilerplate(name="App Name", tagline="App Tagline", description="App 
 		target_file.write(logo_content)
 	
 	# App files
-	app_file_path="/home/adam/Projects/Fullstack/bullship/boilerplate/app.py"
-	config_file_path="/home/adam/Projects/Fullstack/bullship/boilerplate/config.py"
+	app_file_path="./boilerplate/app.py"
+	config_file_path="./boilerplate/config.py"
 
 	with open(app_file_path, 'r') as f:
 		app_content = f.read()
