@@ -75,6 +75,7 @@ def create_boilerplate(name="App Name", tagline="App Tagline", description="App 
 	# App files
 	app_file_path="./boilerplate/app.py"
 	config_file_path="./boilerplate/config.py"
+	readme_file_path="./boilerplate/README.md"
 
 	with open(app_file_path, 'r') as f:
 		app_content = f.read()
@@ -86,7 +87,13 @@ def create_boilerplate(name="App Name", tagline="App Tagline", description="App 
 	with open(os.path.join(app_dir, 'config.py'), 'w') as target_file:
 		target_file.write(config_content)
 
+	with open(readme_file_path, 'r') as f:
+		readme_content = f.read()
+	with open(os.path.join(app_dir, 'README.md'), 'w') as target_file:
+		target_file.write(readme_content)
+
 	with open(os.path.join(app_dir, 'requirements.txt'), 'w') as f:
 		f.write("Flask==2.0.1\n")
+		f.write("stripe\n")
 
 	return temp_dir
