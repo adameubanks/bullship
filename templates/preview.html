@@ -20,9 +20,6 @@
 				<img src="{{ url_for('static', filename='img/sitting_bully.svg') }}" width="75" height="75" class="d-inline-block align-top">
 				<span class="ml-2 h1 {% if app_mode == 'primary' or app_mode == 'dark' %}text-white{%endif %}">{{ app_name }}</span>
 			</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
 			<form action="/create-checkout-session" method="POST">
 				<button type="submit" id="checkout-button" class="btn btn-danger" style="font-size: 20px; padding: 12px 24px;">Get This Template!</button>
 			</form>
