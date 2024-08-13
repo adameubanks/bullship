@@ -93,8 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			const newVariableGroup = document.createElement('div');
 			newVariableGroup.className = 'variable-group';
 			newVariableGroup.innerHTML = `
-					<div class="variable-group-header">
-							<button type="button" class="btn btn-danger btn-sm float-right delete-variable"><i class="fas fa-trash"></i></button>
+					<div class="variable-group-">
+							<button type="button" class="btn btn-danger btn-sm float-right delete-variable">Delete</button>
 					</div>
 					<div class="variable-group">
 							<div class="form-group-variable">
@@ -103,12 +103,15 @@ document.addEventListener('DOMContentLoaded', function() {
 							</div>
 							<div class="form-group-variable">
 									<label for="var_type_${variableCount}" class="variable-label">Variable Type:</label>
-									<select class="form-control" id="var_type_${variableCount}" name="var_types[]" required>
+									<select class="form-control variable-type" id="var_type_${variableCount}" name="var_types[]" required>
 											<option value="text">Text Box</option>
 											<option value="number">Number</option>
-											<option value="date">Date</option>
 											<option value="dropdown">Dropdown List</option>
 									</select>
+							</div>
+							<div class="form-group-variable dropdown-items-container" style="display: none;">
+									<label for="var_items_${variableCount}" class="variable-label">Dropdown Items:</label>
+									<input type="text" class="form-control" id="var_items_${variableCount}" name="var_items[]" placeholder="Enter items separated by commas"></textarea>
 							</div>
 					</div>
 					<br>
@@ -119,6 +122,16 @@ document.addEventListener('DOMContentLoaded', function() {
 			// Reattach delete button event listener
 			newVariableGroup.querySelector('.delete-variable').addEventListener('click', function() {
 					this.closest('.variable-group').remove();
+			});
+
+			// Show/hide dropdown items textarea based on selected type
+			newVariableGroup.querySelector('.variable-type').addEventListener('change', function() {
+					const dropdownContainer = this.closest('.variable-group').querySelector('.dropdown-items-container');
+					if (this.value === 'dropdown') {
+							dropdownContainer.style.display = 'flex';
+					} else {
+							dropdownContainer.style.display = 'none';
+					}
 			});
 	});
 

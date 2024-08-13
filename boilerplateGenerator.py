@@ -1,8 +1,25 @@
-import os
-import tempfile
 from string import Template
+import tempfile
+import os
 
-def create_boilerplate(name="App Name", tagline="App Tagline", description="App Description", theme="App Theme", mode="Light"):
+def generate_variables_code(variables):
+	# Generate Python code for app.py based on user-defined variables.
+	variables_code = ""
+	for variable in variables:
+		safe_name = variable['name'].replace(' ', '_')
+		variables_code += f'''
+    {safe_name} = request.form.get('{variable['name']}', '')
+    session['{safe_name}'] = {safe_name}'''
+  
+	return variables_code
+
+def generate_render_variables(variables):
+	# Generate variable names for render_template() in success route.
+	render_vars = ', '.join([f'{var["name"].replace(" ", "_")} = session.get("{var["name"]}")' for var in variables])
+	render_vars = ', '.join([f'{var["name"].replace(" ", "_")}={var["name"].replace(" ", "_")}' for var in variables])
+	return render_vars
+
+def create_boilerplate(name="App Name", tagline="App Tagline", description="App Description", theme="App Theme", mode="Light", variables={}):
 	temp_dir = tempfile.mkdtemp()
 	app_dir = os.path.join(temp_dir, name.strip().replace(" ", "_"))
 	os.makedirs(app_dir, exist_ok=True)
@@ -18,7 +35,6 @@ def create_boilerplate(name="App Name", tagline="App Tagline", description="App 
 
 	with open(layout_file_path, 'r') as f:
 		layout_content = Template(f.read())
-	# Get text color for navbar
 	if mode == "dark" or mode == "primary":
 		text_color = "text-white"
 	else:
@@ -33,10 +49,39 @@ def create_boilerplate(name="App Name", tagline="App Tagline", description="App 
 	with open(os.path.join(app_dir+'/templates/', 'index.html'), 'w') as target_file:
 		target_file.write(modified_content)
 
+	# Generate form.html dynamically
+	form_fields = ""
+	for variable in variables:
+		if variable['type'] == 'text':
+			form_fields += f'''
+				<div class="form-group">
+					<label for="{variable['name']}">{variable['name']}</label>
+					<input type="text" class="form-control" id="{variable['name']}" name="{variable['name']}" required>
+				</div>
+			'''
+		elif variable['type'] == 'number':
+			form_fields += f'''
+				<div class="form-group">
+					<label for="{variable['name']}">{variable['name']}</label>
+					<input type="number" class="form-control" id="{variable['name']}" name="{variable['name']}" required></textarea>
+				</div>
+					'''
+		elif variable['type'] == 'dropdown':
+			options = "\n".join([f'<option value="{item}">{item}</option>' for item in variable['dropdown_items']])
+			form_fields += f'''
+				<div class="form-group">
+					<label for="{variable['name']}">{variable['name']}</label>
+					<select class="form-control" id="{variable['name']}" name="{variable['name']}" required>
+						{options}
+					</select>
+				</div>
+			'''
+
 	with open(form_file_path, 'r') as f:
-		form_content = f.read()
+		form_content = Template(f.read())
+	modified_form_content = form_content.substitute(form_fields=form_fields)
 	with open(os.path.join(app_dir+'/templates/', 'form.html'), 'w') as target_file:
-		target_file.write(form_content)
+		target_file.write(modified_form_content)
 
 	with open(success_file_path, 'r') as f:
 		success_content = f.read()
@@ -79,6 +124,13 @@ def create_boilerplate(name="App Name", tagline="App Tagline", description="App 
 
 	with open(app_file_path, 'r') as f:
 		app_content = f.read()
+
+	# Prepare dynamic variables code
+	variables_code = generate_variables_code(variables)
+	render_variables = generate_render_variables(variables)
+	app_content = app_content.replace("{VARIABLES_HERE}", variables_code)
+	app_content = app_content.replace("{VARIABLES_RENDER_HERE}", render_variables)
+
 	with open(os.path.join(app_dir, 'app.py'), 'w') as target_file:
 		target_file.write(app_content)
 
