@@ -10,6 +10,9 @@
 		<div class="col-lg-10 offset-lg-1">
 			<div id="alertPlaceholder" class="container mt-3"></div>
 			<form action="{{ url_for('main.preview') }}" id="buildForm" method="POST">
+				<h3>1. Customize Your Template</h3>
+				<p>Configure the look and feel of your SaaS template.</p>
+				<hr>
 				<div class="form-group mt-3">
 					<label for="app_name">Site Name:</label>
 					<input type="text" class="form-control" id="app_name" name="app_name" placeholder="Bullship" required>
@@ -17,6 +20,7 @@
 				<div class="form-group mt-3">
 					<label for="app_tagline">Site Tagline:</label>
 					<input type="text" class="form-control" id="app_tagline" name="app_tagline" placeholder="The Fastest SaaS Solution in the West!" required>
+				</div>
 				<div class="form-group mt-3">
 					<label for="app_description">Site Description:</label>
 					<textarea class="form-control" id="app_description" name="app_description"
@@ -24,8 +28,8 @@
 				</div>
 				<div class="form-group mt-3">
 				  <p>Choose a theme:</p>
+					<div class="theme-options">
 				  <button class="scroll-left" type="button"><i class="fas fa-chevron-left"></i></button>
-				  <div class="theme-options">
 					{% for theme in themes %}
 						<div class="theme-option">
 							<input type="radio" id="{{ theme }}" name="app_theme" value="{{ theme }}">
@@ -35,8 +39,8 @@
 							</label>
 						</div>
 					{% endfor %}
-				  </div>
 				  <button class="scroll-right" type="button"><i class="fas fa-chevron-right"></i></button>
+					</div>
 				</div>
 				<div class="form-group mt-3">
 					<p>Choose a navbar color:</p>
@@ -49,6 +53,14 @@
 						<label for="dark" class="mode-label">Dark</label>
 					</div>
 				</div>
+				<br>
+				<h3>2. Define Your Input Variables (Optional)</h3>
+				<p>Specify the input fields you want users to provide.</p>
+				<hr>
+				<div id="variables-container" class="form-group mt-3">
+					<button type="button" id="add-variable" class="btn btn-secondary mt-3">Add Variable</button>
+					<br><br>
+				</div>
 				<div class="container text-center mt-5">
 					<button type="submit" class="btn btn-lg btn-primary">Preview my Site</button>
 				</div>
@@ -58,55 +70,85 @@
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const form = document.querySelector('form'); // Adjust if your form has a specific class or ID
-  form.addEventListener('submit', function(e) {
-    const themeSelected = document.querySelector('input[name="app_theme"]:checked');
-    if (!themeSelected) {
-      e.preventDefault(); // Prevent form submission
-      displayBootstrapAlert('Please select a theme before submitting.', 'danger');
-    }
-  });
-});
-
-function displayBootstrapAlert(message, type) {
-  const alertPlaceholder = document.getElementById('alertPlaceholder');
-  alertPlaceholder.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">
-			${message}
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-    </div>`;
-}
-
-document.addEventListener('DOMContentLoaded', function() {
+	const form = document.querySelector('form');
+	const alertPlaceholder = document.getElementById('alertPlaceholder');
 	const themeOptionsContainer = document.querySelector('.theme-options');
-	
-	// Find the scroll buttons
 	const scrollRightBtn = document.querySelector('.scroll-right');
 	const scrollLeftBtn = document.querySelector('.scroll-left');
-	
-	// Scroll right functionality
+	let variableCount = 1;
+
+	// Handle form submission
+	form.addEventListener('submit', function(e) {
+			const themeSelected = document.querySelector('input[name="app_theme"]:checked');
+			if (!themeSelected) {
+					e.preventDefault();
+					displayBootstrapAlert('Please select a theme before submitting.', 'danger');
+			}
+	});
+
+	// Handle adding more variables
+	document.getElementById('add-variable').addEventListener('click', function() {
+			variableCount++;
+			const container = document.getElementById('variables-container');
+			const newVariableGroup = document.createElement('div');
+			newVariableGroup.className = 'variable-group';
+			newVariableGroup.innerHTML = `
+					<div class="variable-group-header">
+							<button type="button" class="btn btn-danger btn-sm float-right delete-variable"><i class="fas fa-trash"></i></button>
+					</div>
+					<div class="variable-group">
+							<div class="form-group-variable">
+									<label for="var_name_${variableCount}" class="variable-label">Variable Name:</label>
+									<input type="text" class="form-control" id="var_name_${variableCount}" name="var_names[]" placeholder="Enter variable name" required>
+							</div>
+							<div class="form-group-variable">
+									<label for="var_type_${variableCount}" class="variable-label">Variable Type:</label>
+									<select class="form-control" id="var_type_${variableCount}" name="var_types[]" required>
+											<option value="text">Text Box</option>
+											<option value="number">Number</option>
+											<option value="date">Date</option>
+											<option value="dropdown">Dropdown List</option>
+									</select>
+							</div>
+					</div>
+					<br>
+			`;
+
+			container.appendChild(newVariableGroup);
+
+			// Reattach delete button event listener
+			newVariableGroup.querySelector('.delete-variable').addEventListener('click', function() {
+					this.closest('.variable-group').remove();
+			});
+	});
+
+	// Handle scrolling functionality
 	scrollRightBtn.addEventListener('click', function() {
-		if (themeOptionsContainer.scrollWidth - Math.ceil(themeOptionsContainer.scrollLeft) <= themeOptionsContainer.offsetWidth) {
-			// If at the end, scroll to the beginning
-			themeOptionsContainer.scrollTo({ left: 0, behavior: 'smooth' });
-		} else {
-			// Normal scroll right
-			themeOptionsContainer.scrollBy({ left: 700, behavior: 'smooth' });
-		}
+			if (themeOptionsContainer.scrollWidth - Math.ceil(themeOptionsContainer.scrollLeft) <= themeOptionsContainer.offsetWidth) {
+					themeOptionsContainer.scrollTo({ left: 0, behavior: 'smooth' });
+			} else {
+					themeOptionsContainer.scrollBy({ left: 700, behavior: 'smooth' });
+			}
 	});
-	
-	// Scroll left functionality
+
 	scrollLeftBtn.addEventListener('click', function() {
-		if (themeOptionsContainer.scrollLeft === 0) {
-			// If at the beginning, scroll to the end
-			themeOptionsContainer.scrollTo({ left: themeOptionsContainer.scrollWidth, behavior: 'smooth' });
-		} else {
-			// Normal scroll left
-			themeOptionsContainer.scrollBy({ left: -700, behavior: 'smooth' });
-		}
+			if (themeOptionsContainer.scrollLeft === 0) {
+					themeOptionsContainer.scrollTo({ left: themeOptionsContainer.scrollWidth, behavior: 'smooth' });
+			} else {
+					themeOptionsContainer.scrollBy({ left: -700, behavior: 'smooth' });
+			}
 	});
+
+	// Function to display Bootstrap alert
+	function displayBootstrapAlert(message, type) {
+			alertPlaceholder.innerHTML = `
+					<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+							${message}
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+							</button>
+					</div>`;
+	}
 });
 </script>
-</div>
 {% endblock %}

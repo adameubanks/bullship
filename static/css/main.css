@@ -216,7 +216,7 @@ body, html {
 	background-color: none;
 	position: absolute;
 	border: none;
-	top: 53%;
+	top: 500px;
 	transform: translateY(-50%);
 	z-index: 10;
 }
@@ -228,4 +228,18 @@ body, html {
 }
 .scroll-right {
 	right: 0;
+}
+
+/* Variable Styling */
+.variable-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.form-group-variable {
+  display: flex;
+  align-items: center;
+}
+.variable-label {
+  width: 150px;
 }
